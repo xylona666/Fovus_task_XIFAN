@@ -1,38 +1,143 @@
 .App {
-  text-align: center;
-}
-
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
-.App-header {
-  background-color: #282c34;
   min-height: 100vh;
   display: flex;
-  flex-direction: column;
   align-items: center;
   justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+  padding: 32px 16px;
+  background:
+    linear-gradient(135deg, rgba(237, 246, 249, 0.95), rgba(255, 255, 255, 0.95)),
+    #f4f7f9;
+  color: #172026;
 }
 
-.App-link {
-  color: #61dafb;
+.upload-panel {
+  width: min(100%, 520px);
+  padding: 32px;
+  border: 1px solid #d8e1e7;
+  border-radius: 8px;
+  background: #ffffff;
+  box-shadow: 0 20px 45px rgba(23, 32, 38, 0.08);
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
+.upload-header {
+  margin-bottom: 28px;
+}
+
+.eyebrow {
+  margin: 0 0 8px;
+  color: #28706a;
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.upload-header h1 {
+  margin: 0;
+  font-size: 2rem;
+  line-height: 1.15;
+}
+
+.upload-form {
+  display: grid;
+  gap: 18px;
+}
+
+.field {
+  display: grid;
+  gap: 8px;
+  text-align: left;
+}
+
+.field span {
+  font-size: 0.95rem;
+  font-weight: 700;
+}
+
+.selected-file {
+  color: #55646d;
+  font-size: 0.88rem;
+  font-weight: 500;
+  overflow-wrap: anywhere;
+}
+
+.field input {
+  width: 100%;
+  box-sizing: border-box;
+  border: 1px solid #b9c7cf;
+  border-radius: 6px;
+  background: #ffffff;
+  color: #172026;
+  font: inherit;
+}
+
+.field input[type='text'] {
+  min-height: 46px;
+  padding: 10px 12px;
+}
+
+.field input[type='file'] {
+  padding: 10px;
+}
+
+.field input:focus {
+  border-color: #28706a;
+  outline: 3px solid rgba(40, 112, 106, 0.16);
+}
+
+.submit-button {
+  min-height: 48px;
+  border: 0;
+  border-radius: 6px;
+  background: #28706a;
+  color: #ffffff;
+  cursor: pointer;
+  font: inherit;
+  font-weight: 700;
+  transition:
+    background 160ms ease,
+    transform 160ms ease,
+    box-shadow 160ms ease;
+}
+
+.submit-button:hover:not(:disabled) {
+  background: #1f5c57;
+  box-shadow: 0 10px 22px rgba(40, 112, 106, 0.2);
+  transform: translateY(-1px);
+}
+
+.submit-button:focus {
+  outline: 3px solid rgba(40, 112, 106, 0.24);
+  outline-offset: 3px;
+}
+
+.submit-button:disabled {
+  cursor: not-allowed;
+  opacity: 0.68;
+}
+
+.status-message {
+  min-height: 24px;
+  margin-top: 22px;
+  padding: 14px;
+  border-radius: 6px;
+  background: #edf6f9;
+  color: #24343c;
+  line-height: 1.5;
+  overflow-wrap: anywhere;
+}
+
+@media (max-width: 540px) {
+  .App {
+    align-items: flex-start;
+    padding: 20px 12px;
   }
-  to {
-    transform: rotate(360deg);
+
+  .upload-panel {
+    padding: 24px 18px;
+  }
+
+  .upload-header h1 {
+    font-size: 1.65rem;
   }
 }
