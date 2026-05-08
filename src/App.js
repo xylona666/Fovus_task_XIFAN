@@ -1,7 +1,8 @@
 import { useState } from 'react';
 import './App.css';
 
-const API_GATEWAY_URL = "https://1pyj788lnk.execute-api.us-east-1.amazonaws.com/default/generatePresignedUrl";
+const PRESIGNED_URL_API = 'https://1pyj788lnk.execute-api.us-east-1.amazonaws.com/default/generatePresignedUrl';
+const SUBMIT_JOB_API = 'https://5vwh2kke1i.execute-api.us-east-1.amazonaws.com/default/submitJob';
 
 function App() {
   const [fullName, setFullName] = useState('');
@@ -41,7 +42,7 @@ function App() {
       setIsSubmitting(true);
       setStatus('Requesting upload URL...');
 
-      const uploadUrlResponse = await fetch(API_GATEWAY_URL, {
+      const uploadUrlResponse = await fetch(PRESIGNED_URL_API, {
         method: 'POST',
         body: JSON.stringify({
           fileName,
@@ -73,7 +74,23 @@ function App() {
         throw new Error(`S3 upload failed: ${s3Response.status}`);
       }
 
-      setStatus(`Upload successful! S3 key: ${key}`);
+      setStatus('Saving job metadata to DynamoDB...');
+
+      const submitResponse = await fetch(SUBMIT_JOB_API, {
+        method: 'POST',
+        body: JSON.stringify({
+          fullName,
+          inputFilePath: key,
+        }),
+      });
+
+      if (!submitResponse.ok) {
+        throw new Error('Failed to save job metadata.');
+      }
+
+      const submitData = await submitResponse.json();
+
+      setStatus(`Upload and job submission successful! Job ID: ${submitData.job.id}`);
     } catch (error) {
       console.error('Upload failed:', error);
       setStatus('Upload failed. Please check the browser console.');
